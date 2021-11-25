@@ -405,7 +405,6 @@ async def run(
             process_http_pushes(client=client, include=include, output_dir=output_dir)
             msvcrt.getch()
 
-
 if __name__ == "__main__":
     defaults = QuicConfiguration(is_client=True)
 
