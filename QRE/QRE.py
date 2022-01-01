@@ -83,6 +83,7 @@ if __name__ == "__main__": #TODO: add log file
             curr_info = connections_dict.setdefault(curr_dcid, conn_info(curr_sb, curr_ts)) # Add connection if new 
             curr_info.update(curr_sb, curr_ts)
 
+            
             # print(quic_header.get_field_value("connection_number"))
             # if quic_header.header_form == pyshark.packet.fields.LayerFieldsContainer(0):
             #     print(quic_header.spin_bit, packet_timestamp)
