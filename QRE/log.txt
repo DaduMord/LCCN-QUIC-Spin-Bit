@@ -1,0 +1,138 @@
+
+Starting capture on time: 2022-01-02 18:47:09
+Stopping Estimator
+
+Starting capture on time: 2022-01-02 18:48:26
+Connection ID: None
+RTT: Not Yet Measured
+Last Edge Timestamp: 2022-01-02 18:50:48
+
+Connection ID: 31:ac:33:e9:eb:3a:9c:a2
+RTT: 7.733 ms
+Last Edge Timestamp: 2022-01-02 18:48:51
+
+Connection ID: 49:ff:ec:f7:c1:06:df:b8
+RTT: 0.819 ms
+Last Edge Timestamp: 2022-01-02 18:48:51
+
+Connection ID: e0:56:44:b0:2f:d3:c9:2e
+RTT: 0.644 ms
+Last Edge Timestamp: 2022-01-02 18:49:15
+
+Connection ID: 2c:a9:88:5a:f6:a6:fe:17
+RTT: 0.691 ms
+Last Edge Timestamp: 2022-01-02 18:49:15
+
+Connection ID: f4:e9:95:58:7b:51:5a:27
+RTT: 0.643 ms
+Last Edge Timestamp: 2022-01-02 18:49:51
+
+Connection ID: 86:a5:3b:5a:5c:56:bf:0a
+RTT: 0.642 ms
+Last Edge Timestamp: 2022-01-02 18:50:15
+
+Connection ID: 22:8a:32:c8:a9:f7:6b:64
+RTT: 0.664 ms
+Last Edge Timestamp: 2022-01-02 18:50:15
+
+Connection ID: f2:5c:73:e5:d2:67:3a:22
+RTT: 0.638 ms
+Last Edge Timestamp: 2022-01-02 18:50:44
+
+Connection ID: 62:38:7d:f0:03:79:55:da
+RTT: 0.880 ms
+Last Edge Timestamp: 2022-01-02 18:50:48
+
+Stopping Estimator
+
+Starting capture on time: 
+Starting capture on time: 2022-01-02 19:28:49
+Connection ID: None
+RTT: Not Yet Measured
+Last Edge Timestamp: 2022-01-02 19:30:08
+
+Connection ID: 30:ea:ca:2d:c3:35:25:33
+RTT: 88.466 ms
+Last Edge Timestamp: 2022-01-02 19:30:08
+
+Connection ID: 54:b9:7f:9f:15:89:18:90
+RTT: 75.177 ms
+Last Edge Timestamp: 2022-01-02 19:30:08
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-02 19:31:43
+Connection ID: 56:78:d0:e3:01:5b:49:e8
+RTT: 78.146 ms
+Last Edge Timestamp: 2022-01-02 19:32:09
+
+Connection ID: d6:ad:c2:7b:99:6b:fa:e5
+RTT: 77.086 ms
+Last Edge Timestamp: 2022-01-02 19:32:09
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-02 19:33:13
+Connection ID: 99:a9:00:c5:fe:f9:50:cf
+RTT: 79.181 ms
+Last Edge Timestamp: 2022-01-02 19:34:08
+
+Connection ID: e3:3f:d2:f0:3b:c9:7d:5f
+RTT: 73.903 ms
+Last Edge Timestamp: 2022-01-02 19:34:08
+
+Connection ID: 74:7b:b6:2d:7d:cc:25:ee
+RTT: 77.811 ms
+Last Edge Timestamp: 2022-01-02 19:34:10
+
+Connection ID: 22:8a:29:f4:9e:89:4d:fe
+RTT: 80.190 ms
+Last Edge Timestamp: 2022-01-02 19:34:10
+
+Connection ID: f7:3c:16:c1:ae:9e:ea:3b
+RTT: 73.533 ms
+Last Edge Timestamp: 2022-01-02 19:34:17
+
+Connection ID: c7:bb:b4:d4:9d:d8:0b:3b
+RTT: 79.727 ms
+Last Edge Timestamp: 2022-01-02 19:36:11
+
+Connection ID: 97:18:19:11:45:3e:87:54
+RTT: 78.346 ms
+Last Edge Timestamp: 2022-01-02 19:36:45
+
+Connection ID: 37:74:7d:b3:85:b0:dd:9d
+RTT: 79.475 ms
+Last Edge Timestamp: 2022-01-02 19:36:45
+
+Connection ID: 68:c1:57:74:b6:b0:0a:da
+RTT: 79.966 ms
+Last Edge Timestamp: 2022-01-02 19:36:56
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-02 19:52:20
+Connection ID: 93:56:c8:76:d8:f7:9f:c2
+RTT: 74.652 ms
+Last Edge Timestamp: 2022-01-02 19:54:14
+
+Connection ID: None
+RTT: Not Yet Measured
+Last Edge Timestamp: 2022-01-02 19:54:14
+
+Connection ID: a4:39:3b:2e:19:f1:65:a6
+RTT: 86.678 ms
+Last Edge Timestamp: 2022-01-02 19:54:14
+
+Connection ID: a7:d4:1e:fc:84:82:22:d6
+RTT: 76.066 ms
+Last Edge Timestamp: 2022-01-02 19:54:14
+
+Connection ID: 5c:db:22:be:5c:72:c7:9e
+RTT: 92.034 ms
+Last Edge Timestamp: 2022-01-02 19:54:14
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-02 19:58:54
+Stopping Estimator

@@ -1,95 +1,94 @@
-import datetime
 import pyshark
 import time
-import sys
 
 class conn_info:
-    def __init__(self, sb, edge_ts, rtt=None):
+    """
+    A class to hold all relevant information for each QUIC connection we detect
+    Field:
+        - sb: holds current spin bit of the connection
+        - rtt: holds current RTT estimation
+        - edge_ts: timestamp of the last "edge" we detected.
+                    we call each packet that switches the spin bit an "edge".
+    """
+
+    def __init__(self, sb, edge_ts, rtt=None): # initialize a new conn_info class. default for rtt field is None
         self.sb = sb
         self.rtt = rtt
         self.edge_ts = edge_ts
 
-    def update(self, curr_sb, curr_ts):
+    def update(self, curr_sb, curr_ts): # update the rtt estimation and connection fields if necessary
         if (self.sb != curr_sb): # if spin bit has changed
-            self.rtt = self.calc_rtt(curr_ts - self.edge_ts)
-            self.sb = curr_sb
-            self.edge_ts = curr_ts
+            self.rtt = self.calc_rtt(curr_ts - self.edge_ts) # update rtt
+            self.sb = curr_sb # update spin bit
+            self.edge_ts = curr_ts # update edge timestamp
 
-    def calc_rtt(self, new_rtt):
-        if (self.rtt == None):
+    def calc_rtt(self, new_rtt): # calculate a new rtt with the moving average algorithm
+        if self.rtt is None: # if we don't have an estimation yet, use the last measurement as the estimation
             return new_rtt
         alpha = 7 / 8
         return alpha * self.rtt + (1 - alpha) * new_rtt 
     
-    def to_string(self):
+    def __str__(self): # override the default cast to string
         last_edge_ts = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(self.edge_ts))
         if self.rtt is None:
             res = "RTT: Not Yet Measured\n"
         else:
-            res = "RTT: " + ("%.3f ms\n" % (self.rtt*1000))
-        res += "Current Spin Bit: " + str(self.sb) + "\n"\
-                "Last Edge Timestamp: " + last_edge_ts
+            res = "RTT: " + ("%.3f ms\n" % (self.rtt * 1000))
+        res += "Last Edge Timestamp: " + last_edge_ts + "\n"
         return res
 
+def print_conns(dict, log=None): # print the dictionary nicely to the default output and log file
+    """
+    Expects a dictionray of type Connection ID : conn_info
+    """
 
-def print_conns(dict):
-    """
-    Expectes a dictionray of Connection ID : conn_info
-    """
-    # TODO: add print to log file
     for key, value in dict.items():
         print("Connection ID:", key)
-        print(value.to_string(), end="\n\n")
+        print(value, end="\n")
 
-if __name__ == "__main__": #TODO: add log file
-    connections_dict = {}
+        if log is not None:
+            log.write("Connection ID: " + str(key) + "\n" + str(value) + "\n")
+
+def print_finish(log=None): # print final message to default output and log file
+    print("Stopping Estimator")
+
+    if log is not None:
+        log.write("Stopping Estimator\n")
+
+
+def process_header(packet, quic_header, connections_dict):
+    # Extract values from quic header   
+    curr_dcid = quic_header.get_field_value("dcid")
+    curr_sb =  quic_header.get_field_value("spin_bit")
+    curr_ts = float(packet.sniff_timestamp)
+    header_form = quic_header.get_field_value("header_form")
+    long_packet_type = quic_header.get_field_value("long_packet_type")
+
+    if header_form == "1" and long_packet_type == "0": # initial packet. values may be irrelevant
+        return
+
+    if curr_dcid is not None:
+        curr_info = connections_dict.setdefault(curr_dcid, conn_info(curr_sb, curr_ts)) # add connection if new 
+        curr_info.update(curr_sb, curr_ts) # update the connection's info
+
+if __name__ == "__main__":
     """
     dictionary's keys: connection ID
     dictionary's values: [current spinbit's value, estimated RTT, last edge timestamp]
     """
-    live_cap = pyshark.LiveCapture(display_filter="quic") # TODO: choose specifice interface
+    connections_dict = {}
+
+    filename = ".\QRE\log.txt" # change this to output to a different file
+    log = open(filename, "a") # open log file in mode=append
+    log.write("\nStarting capture on time: " + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + "\n")
+
+    live_cap = pyshark.LiveCapture(display_filter="quic") # TODO: choose specific interface
 
     try:
-        for i, packet in enumerate(live_cap):
-        # for packet in live_cap:
-            # print(packet.layers) #TODO: remove this
-            quic_header = packet['quic'] #TODO: there can be multiple QUIC headers in a single packet
-            
-            #debug stuff
-            # print(quic_header.field_names)  #TODO: remove
-            # print("header_form:", quic_header.get_field_value("header_form"))
-            # print("long_packet_type:", quic_header.get_field_value("long_packet_type"))
-            # print("frame_type:", quic_header.get_field_value("frame_type"))
-            # ['', 'connection_number', 'packet_length', 'short', 'header_form', 'fixed_bit', 'spin_bit', 'dcid', 'remaining_payload']
-            
-            
-            curr_dcid = quic_header.get_field_value("dcid")
-            curr_sb =  quic_header.get_field_value("spin_bit")
-            # print("spin bit's value: ", curr_sb) #TODO: remove
-            # print("spinbit's type:", type(curr_sb)) #TODO: remove
-            curr_ts = float(packet.sniff_timestamp)
-            header_form = quic_header.get_field_value("header_form")
-            long_packet_type = quic_header.get_field_value("long_packet_type")
+        for packet in live_cap: # iterate over captured packets. the loop will enter every time a quic packet is captured.
+            process_header(packet, packet['quic'], connections_dict)
 
-            # print(type(curr_dcid)) #TODO: remove
-            # <class 'pyshark.packet.fields.LayerFieldsContainer'>
-
-
-            if header_form == "1" and long_packet_type == "0": # Initial packet
-                curr_scid = quic_header.get_field_value("scid")
-                connections_dict[curr_scid] = conn_info(None, curr_ts) # Insert by scid. scid will be dcid for future packets
-                continue
-
-            curr_info = connections_dict.setdefault(curr_dcid, conn_info(curr_sb, curr_ts)) # Add connection if new 
-            curr_info.update(curr_sb, curr_ts)
-
-            
-            # print(quic_header.get_field_value("connection_number"))
-            # if quic_header.header_form == pyshark.packet.fields.LayerFieldsContainer(0):
-            #     print(quic_header.spin_bit, packet_timestamp)
-
-    except KeyboardInterrupt:
-        live_cap.close()
-        print_conns(connections_dict)
-        print("Stopping Estimator")
-        sys.exit(0)
+    except KeyboardInterrupt: # when stopped with Ctrl+C
+        print_conns(connections_dict, log=log) # print the info of the connection and record it in log.txt
+        print_finish(log) # print final message
+        log.close()
