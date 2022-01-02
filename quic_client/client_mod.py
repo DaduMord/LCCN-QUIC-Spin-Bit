@@ -1,12 +1,9 @@
 
 
 import argparse
-import sys
+import os
 
 def define_args(parser):
-    parser.add_argument(
-        "url", type=str, nargs="+", help="the URL to query (must be HTTPS)"
-    )
     parser.add_argument(
         "-r",
         "--requests-file",
@@ -27,27 +24,24 @@ def define_args(parser):
     #  TODO: add -rtt flag
 
 
-def correct_format(line: str):
-    return False
-    pass
 
 
-def handle_request_file(filename: str):
+def handle_request_file(filename: str) -> str: #checked
     url = ""
     url_base = "https://10.10.44.10:4433/"
-    with open(filename, "r") as file:
-        for line in file:
-            if correct_format(line):
+    if filename is not None:
+        with open(filename, "r") as file:
+            for line in file:
                 args = line.split()
 
-                if args[0] is "GET":
-                    url += url_base + args[1]
-                    
-                elif args[0] is "POST":
+                if args[0] == "GET":
+                    url += url_base + args[1] + " "
+
+                elif args[0] == "POST":
                     #  TODO: figure out how to send multiple echoes, if possible
                     pass
 
-    if url is "":
+    if url == "":
         url = url_base  # url base is also the default empty get requests needed
     return url
 
@@ -55,12 +49,18 @@ def handle_request_file(filename: str):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="QUIC modified client")
     define_args(parser)
+
     args = parser.parse_args()
     url = handle_request_file(args.requests_file)
-    command_line = "./http3_client.cpython-39.pyc --ca-certs tests/pycacert.pem "
-    command_line += "--output-dir " + args.output_dir
-    command_line += "--quic-log " + args.quic_log
+    command_line = "http3_client.cpython-39.pyc --ca-certs pycacert.pem "
+
+    if args.output_dir is not None:
+        command_line += " --output-dir " + args.output_dir + " "
+    if args.quic_log is not None:
+        command_line += " --quic-log " + args.quic_log + " "
     command_line += url
+    print(command_line)
+    os.system(command_line)
 
 
         
