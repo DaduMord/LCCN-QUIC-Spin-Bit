@@ -10,25 +10,28 @@ class conn_info:
         - edge_ts: timestamp of the last "edge" we detected.
                     we call each packet that switches the spin bit an "edge".
     """
-
-    def __init__(self, sb, edge_ts, rtt=None): # initialize a new conn_info class. default for rtt field is None
+    # initialize a new conn_info class. default for rtt field is None
+    def __init__(self, sb, edge_ts, rtt=None):
         self.sb = sb
         self.rtt = rtt
         self.edge_ts = edge_ts
 
-    def update(self, curr_sb, curr_ts): # update the rtt estimation and connection fields if necessary
+    # update the rtt estimation and connection fields if necessary
+    def update(self, curr_sb, curr_ts):
         if (self.sb != curr_sb): # if spin bit has changed
             self.rtt = self.calc_rtt(curr_ts - self.edge_ts) # update rtt
             self.sb = curr_sb # update spin bit
             self.edge_ts = curr_ts # update edge timestamp
 
-    def calc_rtt(self, new_rtt): # calculate a new rtt with the moving average algorithm
+    # calculate a new rtt with the moving average algorithm
+    def calc_rtt(self, new_rtt):
         if self.rtt is None: # if we don't have an estimation yet, use the last measurement as the estimation
             return new_rtt
         alpha = 7 / 8
         return alpha * self.rtt + (1 - alpha) * new_rtt 
     
-    def __str__(self): # override the default cast to string
+    # override the default cast to string
+    def __str__(self):
         last_edge_ts = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(self.edge_ts))
         if self.rtt is None:
             res = "RTT: Not Yet Measured\n"
@@ -37,7 +40,8 @@ class conn_info:
         res += "Last Edge Timestamp: " + last_edge_ts + "\n"
         return res
 
-def print_conns(dict, log=None): # print the dictionary nicely to the default output and log file
+# print the dictionary nicely to the default output and log file
+def print_conns(dict, log=None):
     """
     Expects a dictionray of type Connection ID : conn_info
     """
@@ -49,7 +53,8 @@ def print_conns(dict, log=None): # print the dictionary nicely to the default ou
         if log is not None:
             log.write("Connection ID: " + str(key) + "\n" + str(value) + "\n")
 
-def print_finish(log=None): # print final message to default output and log file
+# print final message to default output and log file
+def print_finish(log=None):
     print("Stopping Estimator")
 
     if log is not None:
@@ -58,13 +63,14 @@ def print_finish(log=None): # print final message to default output and log file
 
 def process_header(packet, quic_header, connections_dict):
     # Extract values from quic header   
-    curr_dcid = quic_header.get_field_value("dcid")
+    curr_dcid = quic_header.get_field_value("dcid") # dcid = Destination Connection ID
     curr_sb =  quic_header.get_field_value("spin_bit")
     curr_ts = float(packet.sniff_timestamp)
+
+    # need to check if the packet is initial (dcid will be unusable)
     header_form = quic_header.get_field_value("header_form")
     long_packet_type = quic_header.get_field_value("long_packet_type")
-
-    if header_form == "1" and long_packet_type == "0": # initial packet. values may be irrelevant
+    if header_form == "1" and long_packet_type == "0": # initial packet
         return
 
     if curr_dcid is not None:
