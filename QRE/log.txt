@@ -136,3 +136,35 @@ Stopping Estimator
 
 Starting capture on time: 2022-01-02 19:58:54
 Stopping Estimator
+
+Starting capture on time: 2022-01-03 18:23:12
+Stopping Estimator
+
+Starting capture on time: 2022-01-11 12:56:52
+Stopping Estimator
+
+Starting capture on time: 2022-01-11 12:57:42
+Connection ID: 68:c7:1b:54:16:7e:d9:9b
+RTT: 74.597 ms
+Last Edge Timestamp: 2022-01-11 12:57:45
+
+Connection ID: b6:fb:6f:7d:e1:da:16:74
+RTT: 43.696 ms
+Last Edge Timestamp: 2022-01-11 12:57:47
+
+Connection ID: 69:c6:d1:29:1c:f4:e2:4a
+RTT: 5.170 ms
+Last Edge Timestamp: 2022-01-11 12:57:47
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-11 12:58:08
+Connection ID: d0:2c:88:47:c0:6d:46:41
+RTT: 45.006 ms
+Last Edge Timestamp: 2022-01-11 12:58:12
+
+Connection ID: 82:bc:79:82:09:84:2e:11
+RTT: 5.694 ms
+Last Edge Timestamp: 2022-01-11 12:58:12
+
+Stopping Estimator

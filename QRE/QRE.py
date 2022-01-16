@@ -15,11 +15,14 @@ class conn_info:
         self.sb = sb
         self.rtt = rtt
         self.edge_ts = edge_ts
+        self.rtt_measurements = []
 
     # update the rtt estimation and connection fields if necessary
     def update(self, curr_sb, curr_ts):
         if (self.sb != curr_sb): # if spin bit has changed
-            self.rtt = self.calc_rtt(curr_ts - self.edge_ts) # update rtt
+            latest_rtt = curr_ts - self.edge_ts # calculate the time difference from last edge
+            self.rtt = self.calc_rtt(latest_rtt) # update rtt
+            self.rtt_measurements.append(latest_rtt) # insert measurement to measurements array
             self.sb = curr_sb # update spin bit
             self.edge_ts = curr_ts # update edge timestamp
 
@@ -40,10 +43,19 @@ class conn_info:
         res += "Last Edge Timestamp: " + last_edge_ts + "\n"
         return res
 
+    def measurements_tostr(self, measurements):
+        if len(measurements) == 0:
+            return "No Measurements"
+        res = ""
+        for i, measurement in enumerate(measurements):
+            res += str(i) + ": " + "%.3f ms\n" % (measurement * 1000)
+        return res
+
+
 # print the dictionary nicely to the default output and log file
-def print_conns(dict, log=None):
+def print_conns(dict, log=None, print_separate_files=False, timestamp=None):
     """
-    Expects a dictionray of type Connection ID : conn_info
+    Expects a dictionary of type Connection ID : conn_info
     """
 
     for key, value in dict.items():
@@ -52,6 +64,15 @@ def print_conns(dict, log=None):
 
         if log is not None:
             log.write("Connection ID: " + str(key) + "\n" + str(value) + "\n")
+        if print_separate_files:
+            conn_log = ".\\QRE\\logs\\" + timestamp.replace(":", ".") + " ID " + str(key).replace(":", "") + ".txt"
+            with open(conn_log, "w+") as file:
+                file.write("Connection ID: " + str(key) + "\n" + str(value) + "\n" + "RTT Measurements:\n")
+
+                measurements_str = value.measurements_tostr(value.rtt_measurements)
+                file.write(measurements_str)
+
+                file.close()
 
 # print final message to default output and log file
 def print_finish(log=None):
@@ -80,13 +101,14 @@ def process_header(packet, quic_header, connections_dict):
 if __name__ == "__main__":
     """
     dictionary's keys: connection ID
-    dictionary's values: [current spinbit's value, estimated RTT, last edge timestamp]
+    dictionary's values: [current spinbit's value, estimated RTT, last edge timestamp, rtt measurements]
     """
     connections_dict = {}
+    start_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
-    filename = ".\QRE\log.txt" # change this to output to a different file
+    filename = ".\\QRE\\logs\\log.txt" # change this to output to a different file
     log = open(filename, "a") # open log file in mode=append
-    log.write("\nStarting capture on time: " + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + "\n")
+    log.write("\nStarting capture on time: " + start_time + "\n")
 
     live_cap = pyshark.LiveCapture(display_filter="quic") # TODO: choose specific interface
 
@@ -95,6 +117,6 @@ if __name__ == "__main__":
             process_header(packet, packet['quic'], connections_dict)
 
     except KeyboardInterrupt: # when stopped with Ctrl+C
-        print_conns(connections_dict, log=log) # print the info of the connection and record it in log.txt
+        print_conns(connections_dict, log=log, print_separate_files=True, timestamp=start_time) # print the info of the connection and record it in log.txt
         print_finish(log) # print final message
         log.close()
