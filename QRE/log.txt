@@ -137,34 +137,109 @@ Stopping Estimator
 Starting capture on time: 2022-01-02 19:58:54
 Stopping Estimator
 
-Starting capture on time: 2022-01-03 18:23:12
-Stopping Estimator
+Starting capture on time: 2022-01-03 14:07:46
+Connection ID: 45:6a:94:83:a5:38:c1:98
+RTT: 14.945 ms
+Last Edge Timestamp: 2022-01-03 14:09:13
 
-Starting capture on time: 2022-01-11 12:56:52
-Stopping Estimator
-
-Starting capture on time: 2022-01-11 12:57:42
-Connection ID: 68:c7:1b:54:16:7e:d9:9b
-RTT: 74.597 ms
-Last Edge Timestamp: 2022-01-11 12:57:45
-
-Connection ID: b6:fb:6f:7d:e1:da:16:74
-RTT: 43.696 ms
-Last Edge Timestamp: 2022-01-11 12:57:47
-
-Connection ID: 69:c6:d1:29:1c:f4:e2:4a
-RTT: 5.170 ms
-Last Edge Timestamp: 2022-01-11 12:57:47
+Connection ID: 69:ae:00:29:cb:b7:89:6a
+RTT: 1179.434 ms
+Last Edge Timestamp: 2022-01-03 14:09:22
 
 Stopping Estimator
 
-Starting capture on time: 2022-01-11 12:58:08
-Connection ID: d0:2c:88:47:c0:6d:46:41
-RTT: 45.006 ms
-Last Edge Timestamp: 2022-01-11 12:58:12
+Starting capture on time: 2022-01-03 14:13:46
+Connection ID: f9:5e:e9:3b:f3:ab:1a:d3
+RTT: 16.496 ms
+Last Edge Timestamp: 2022-01-03 14:14:55
 
-Connection ID: 82:bc:79:82:09:84:2e:11
-RTT: 5.694 ms
-Last Edge Timestamp: 2022-01-11 12:58:12
+Connection ID: cc:b6:12:92:e8:a2:75:83
+RTT: 491.368 ms
+Last Edge Timestamp: 2022-01-03 14:14:59
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-03 14:23:38
+Connection ID: 44:34:79:91:e6:70:d1:48
+RTT: 20.614 ms
+Last Edge Timestamp: 2022-01-03 14:23:43
+
+Connection ID: 70:5b:37:96:c7:c8:93:21
+RTT: 1.381 ms
+Last Edge Timestamp: 2022-01-03 14:23:43
+
+Connection ID: 1e:f6:41:98:c0:8b:13:e0
+RTT: 15.094 ms
+Last Edge Timestamp: 2022-01-03 14:23:51
+
+Connection ID: 1a:4b:5f:bb:e4:29:bb:a6
+RTT: 1773.380 ms
+Last Edge Timestamp: 2022-01-03 14:24:05
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-03 14:25:59
+Connection ID: 2b:57:97:6e:44:ac:ac:23
+RTT: 23.817 ms
+Last Edge Timestamp: 2022-01-03 14:26:02
+
+Connection ID: df:e6:fb:88:2e:4c:8e:18
+RTT: 467.656 ms
+Last Edge Timestamp: 2022-01-03 14:26:06
+
+Connection ID: 91:f7:b1:a4:d4:ab:b7:ee
+RTT: 14.564 ms
+Last Edge Timestamp: 2022-01-03 14:26:10
+
+Connection ID: 76:5e:c8:89:d3:66:e4:89
+RTT: 6.120 ms
+Last Edge Timestamp: 2022-01-03 14:26:10
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-10 23:37:43
+Connection ID: f1:2b:28:24:a5:bd:cf:ea
+RTT: 48.835 ms
+Last Edge Timestamp: 2022-01-10 23:37:56
+
+Connection ID: 68:76:ac:67:77:08:db:b2
+RTT: 60.741 ms
+Last Edge Timestamp: 2022-01-10 23:37:56
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-10 23:46:24
+Connection ID: 80:0f:cd:99:41:1c:fe:39
+RTT: 34.897 ms
+Last Edge Timestamp: 2022-01-10 23:46:29
+
+Connection ID: 0b:68:bd:4f:44:7d:eb:ad
+RTT: 17.761 ms
+Last Edge Timestamp: 2022-01-10 23:46:29
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-10 23:50:31
+Stopping Estimator
+
+Starting capture on time: 2022-01-10 23:51:07
+Connection ID: a4:9a:05:be:7a:3d:77:e0
+RTT: 148.652 ms
+Last Edge Timestamp: 2022-01-10 23:51:14
+
+Connection ID: f2:4d:87:46:68:c2:1c:c4
+RTT: 72.568 ms
+Last Edge Timestamp: 2022-01-10 23:51:14
+
+Stopping Estimator
+
+Starting capture on time: 2022-01-11 01:00:45
+Connection ID: ca:94:6c:a2:ac:e1:04:b2
+RTT: 23.936 ms
+Last Edge Timestamp: 2022-01-11 01:00:50
+
+Connection ID: 16:01:2c:de:f1:31:1d:64
+RTT: 20.250 ms
+Last Edge Timestamp: 2022-01-11 01:00:50
 
 Stopping Estimator
