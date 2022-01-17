@@ -1,0 +1,7 @@
+Connection ID: a7:82:a1:02:5d:5c:7e:57
+RTT: 19.622 ms
+Last Edge Timestamp: 2022-01-17 14:27:10
+
+RTT Measurements:
+0: 20.019 ms
+1: 16.847 ms

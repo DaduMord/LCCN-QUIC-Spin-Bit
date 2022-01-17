@@ -9,6 +9,8 @@ class conn_info:
         - rtt: holds current RTT estimation
         - edge_ts: timestamp of the last "edge" we detected.
                     we call each packet that switches the spin bit an "edge".
+        - rtt_measurements: an array that holds all the rtt measurements that
+                    made for this connection.
     """
     # initialize a new conn_info class. default for rtt field is None
     def __init__(self, sb, edge_ts, rtt=None):
@@ -43,6 +45,7 @@ class conn_info:
         res += "Last Edge Timestamp: " + last_edge_ts + "\n"
         return res
 
+    # convert measurements array to string for printing purposes
     def measurements_tostr(self, measurements):
         if len(measurements) == 0:
             return "No Measurements"
