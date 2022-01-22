@@ -21,6 +21,11 @@ def define_args(parser):
         type=str,
         help="log QUIC events to QLOG files in the specified directory",
     )
+    parser.add_argument(
+        "--py3",
+        action="store_true",
+        help="run with python3 command rather than python",
+    )
     #  TODO: add -rtt flag
 
 
@@ -52,7 +57,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     url = handle_request_file(args.requests_file)
-    command_line = "http3_client.cpython-39.pyc --ca-certs pycacert.pem "
+    # command_line = "http3_client.cpython-39.pyc --ca-certs pycacert.pem "
+    if not args.py3:
+        command_line = "python http3_client.py --ca-certs pycacert.pem "
+    else:
+        command_line = "python3 http3_client.py --ca-certs pycacert.pem "
 
     if args.output_dir is not None:
         command_line += " --output-dir " + args.output_dir + " "
