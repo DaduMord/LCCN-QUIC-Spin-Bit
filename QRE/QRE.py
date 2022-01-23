@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
     try:
         for packet in live_cap: # iterate over captured packets. the loop will enter every time a quic packet is captured.
-            process_header(packet, packet['quic'], connections_dict)
+            process_header(packet, packet.layers[-1], connections_dict) # packet.layers[-1] gets the last header of the packet
 
     except KeyboardInterrupt: # when stopped with Ctrl+C
         print_conns(connections_dict, log=log, print_separate_files=True, timestamp=start_time) # print the info of the connection and record it in log.txt
