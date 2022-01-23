@@ -24,7 +24,7 @@ class conn_info:
         if (self.sb != curr_sb): # if spin bit has changed
             latest_rtt = curr_ts - self.edge_ts # calculate the time difference from last edge
             self.rtt = self.calc_rtt(latest_rtt) # update rtt
-            self.rtt_measurements.append(latest_rtt) # insert measurement to measurements array
+            self.rtt_measurements.append((latest_rtt, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(curr_ts)))) # insert measurement to measurements array
             self.sb = curr_sb # update spin bit
             self.edge_ts = curr_ts # update edge timestamp
 
@@ -51,7 +51,8 @@ class conn_info:
             return "No Measurements"
         res = ""
         for i, measurement in enumerate(measurements):
-            res += str(i) + ": " + "%.3f ms\n" % (measurement * 1000)
+            rtt = "%.3f ms" % (measurement[0] * 1000)
+            res += "%3s: %8s :: %s\n" % (str(i), rtt, measurement[1])
         return res
 
 
@@ -94,11 +95,11 @@ def process_header(packet, quic_header, connections_dict):
     # need to check if the packet is initial (dcid will be unusable)
     header_form = quic_header.get_field_value("header_form")
     long_packet_type = quic_header.get_field_value("long_packet_type")
-    if header_form == "1" and long_packet_type == "0": # initial packet
-        return
 
-    if curr_dcid is not None:
-        curr_info = connections_dict.setdefault(curr_dcid, conn_info(curr_sb, curr_ts)) # add connection if new 
+    if header_form == "0": # short header
+        assert(curr_dcid is not None)
+        assert(curr_sb is not None)
+        curr_info = connections_dict.setdefault(curr_dcid, conn_info(curr_sb, curr_ts)) # add connection if new
         curr_info.update(curr_sb, curr_ts) # update the connection's info
 
 if __name__ == "__main__":
