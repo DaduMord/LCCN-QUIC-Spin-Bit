@@ -1,0 +1,8 @@
+Connection ID: 7a:fa:d0:d0:f2:8f:6b:2a
+RTT: 21.725 ms
+Last Edge Timestamp: 2022-01-26 00:39:23
+
+RTT Measurements:
+  0: 21.162 ms :: 2022-01-26 00:39:23
+  1: 22.711 ms :: 2022-01-26 00:39:23
+  2: 24.312 ms :: 2022-01-26 00:39:23
