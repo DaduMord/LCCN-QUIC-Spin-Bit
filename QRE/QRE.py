@@ -20,11 +20,11 @@ class conn_info:
         self.rtt_measurements = []
 
     # update the rtt estimation and connection fields if necessary
-    def update(self, curr_sb, curr_ts): #TODO: alter so that  we have ms accuracy
+    def update(self, curr_sb, curr_ts):
         if (self.sb != curr_sb): # if spin bit has changed
             latest_rtt = curr_ts - self.edge_ts # calculate the time difference from last edge
             self.rtt = self.calc_rtt(latest_rtt) # update rtt
-            self.rtt_measurements.append((latest_rtt, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(curr_ts)))) # insert measurement to measurements array
+            self.rtt_measurements.append((latest_rtt, curr_ts)) # insert measurement to measurements array
             self.sb = curr_sb # update spin bit
             self.edge_ts = curr_ts # update edge timestamp
 
@@ -51,8 +51,11 @@ class conn_info:
             return "No Measurements"
         res = ""
         for i, measurement in enumerate(measurements):
+            timestamp = measurement[1]
+            timestamp_ms = timestamp % 1
+            timestamp_ms = str(timestamp_ms)[2:8]
             rtt = "%.3f ms" % (measurement[0] * 1000)
-            res += "%3s: %8s :: %s\n" % (str(i), rtt, measurement[1])
+            res += "%3s: %8s :: %s.%s\n" % (str(i), rtt, time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(timestamp)), timestamp_ms)
         return res
 
 
