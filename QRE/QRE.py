@@ -20,7 +20,7 @@ class conn_info:
         self.rtt_measurements = []
 
     # update the rtt estimation and connection fields if necessary
-    def update(self, curr_sb, curr_ts):
+    def update(self, curr_sb, curr_ts): #TODO: alter so that  we have ms accuracy
         if (self.sb != curr_sb): # if spin bit has changed
             latest_rtt = curr_ts - self.edge_ts # calculate the time difference from last edge
             self.rtt = self.calc_rtt(latest_rtt) # update rtt
@@ -116,7 +116,7 @@ if __name__ == "__main__":
 
     live_cap = pyshark.LiveCapture(display_filter="quic") # TODO: choose specific interface
 
-    try:
+    try: # TODO: live_cap.sniff_continuously()?
         for packet in live_cap: # iterate over captured packets. the loop will enter every time a quic packet is captured.
             process_header(packet, packet.layers[-1], connections_dict) # packet.layers[-1] gets the last header of the packet
 
