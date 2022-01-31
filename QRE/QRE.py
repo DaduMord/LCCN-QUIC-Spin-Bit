@@ -37,6 +37,7 @@ class conn_info:
     
     # override the default cast to string
     def __str__(self):
+        # last_edgs_ts = time.time()
         last_edge_ts = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(self.edge_ts))
         if self.rtt is None:
             res = "RTT: Not Yet Measured\n"
