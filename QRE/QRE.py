@@ -101,10 +101,9 @@ def process_header(packet, quic_header, connections_dict):
     long_packet_type = quic_header.get_field_value("long_packet_type")
 
     if header_form == "0": # short header
-        assert(curr_dcid is not None)
-        assert(curr_sb is not None)
-        curr_info = connections_dict.setdefault(curr_dcid, conn_info(curr_sb, curr_ts)) # add connection if new
-        curr_info.update(curr_sb, curr_ts) # update the connection's info
+        if curr_dcid is not None:
+            curr_info = connections_dict.setdefault(curr_dcid, conn_info(curr_sb, curr_ts)) # add connection if new
+            curr_info.update(curr_sb, curr_ts) # update the connection's info
 
 if __name__ == "__main__":
     """
