@@ -1,5 +1,6 @@
 import pyshark
 import time
+import os
 
 class conn_info:
     """
@@ -113,7 +114,12 @@ if __name__ == "__main__":
     connections_dict = {}
     start_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
-    filename = ".\\QRE\\logs\\log.txt" # change this to output to a different file
+    filename = ".\\QRE\\logs\\log.txt" # change this in order to output to a different file
+
+    if not os.path.exists(".\\QRE\\logs"): # check if logs folder exists
+        os.makedirs(".\\QRE\\logs")        # create logs folder if not
+        print("logs folder created at " + os.getcwd() + "\\QRE\\logs")
+
     log = open(filename, "a") # open log file in mode=append
     log.write("\nStarting capture on time: " + start_time + "\n")
 
