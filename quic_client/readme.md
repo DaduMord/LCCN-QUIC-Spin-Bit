@@ -4,7 +4,7 @@
 In order to run the client you should run the following command: 
 
 ```shell
-  python quic_client/http3_client.py --ca-certs tests/pycacert.pem https://10.10.44.10:4433/
+  python client_mod.py -r file.txt -q ./logs/
   ```
   
 Can add flags such as:
