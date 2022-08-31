@@ -108,6 +108,9 @@ def process_header(packet, quic_header, connections_dict):
             curr_info = connections_dict.setdefault(curr_dcid, conn_info(curr_sb, curr_ts)) # add connection if new
             curr_info.update(curr_sb, curr_ts) # update the connection's info
 
+def process_packet(packet):
+    process_header(packet, packet.layers[-1], connections_dict)  # packet.layers[-1] gets the last header of the packet
+
 if __name__ == "__main__":
     """
     dictionary's keys: connection ID
@@ -128,8 +131,7 @@ if __name__ == "__main__":
     live_cap = pyshark.LiveCapture(display_filter="quic") # TODO: choose specific interface
 
     try:
-        for packet in live_cap.sniff_continuously(): # TODO: close the capture neatly
-            process_header(packet, packet.layers[-1], connections_dict) # packet.layers[-1] gets the last header of the packet
+        live_cap.apply_on_packets(process_packet)
 
     except KeyboardInterrupt: # when stopped with Ctrl+C
         print_conns(connections_dict, log=log, print_separate_files=True, timestamp=start_time) # print the info of the connection and record it in log.txt
